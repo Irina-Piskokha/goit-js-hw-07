@@ -19,12 +19,19 @@ const itemsGalary = galleryItems
   .join("");
 container.insertAdjacentHTML("beforeend", itemsGalary);
 
-container.addEventListener("click", (evt) => {
+container.addEventListener("click", showModal);
+function showModal(evt) {
   evt.preventDefault();
   if (evt.target.nodeName !== "IMG") return;
   const instance = basicLightbox.create(
     `<img src="${evt.target.dataset.source}" alt="${evt.target.alt}">`
   );
-
   instance.show();
-});
+
+  document.addEventListener("keydown", onClosedModalEsc);
+  function onClosedModalEsc(evt) {
+    if (evt.key !== "Escape") return;
+    instance.close();
+    document.removeEventListener("keydown", onClosedModalEsc);
+  }
+}
