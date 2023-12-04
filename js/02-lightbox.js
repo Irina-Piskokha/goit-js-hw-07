@@ -16,13 +16,8 @@ const itemsGalary = galleryItems
   .join("");
 container.insertAdjacentHTML("beforeend", itemsGalary);
 
-container.addEventListener("click", showModal);
-function showModal(evt) {
-  evt.preventDefault();
-  if (evt.target.nodeName !== "IMG") return;
-  let gallery = new SimpleLightbox(".gallery__item a", {
-    captionsData: "alt",
-    captionPosition: "bottom",
-    captionDelay: 250,
-  });
-}
+let gallery = new SimpleLightbox(".gallery__item a", {
+  captionsData: "alt",
+  captionPosition: "bottom",
+  captionDelay: 250,
+});

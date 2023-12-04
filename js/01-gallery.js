@@ -23,15 +23,23 @@ container.addEventListener("click", showModal);
 function showModal(evt) {
   evt.preventDefault();
   if (evt.target.nodeName !== "IMG") return;
+
   const instance = basicLightbox.create(
-    `<img src="${evt.target.dataset.source}" alt="${evt.target.alt}">`
+    `<img src="${evt.target.dataset.source}" alt="${evt.target.alt}">`,
+    {
+      onShow: () => {
+        document.addEventListener("keydown", keyBordPress);
+      },
+      onClose: () => {
+        document.removeEventListener("keydown", keyBordPress);
+      },
+    }
   );
   instance.show();
 
-  document.addEventListener("keydown", onClosedModalEsc);
-  function onClosedModalEsc(evt) {
-    if (evt.key !== "Escape") return;
-    instance.close();
-    document.removeEventListener("keydown", onClosedModalEsc);
+  function keyBordPress(evt) {
+    if (evt.key === "Escape") {
+      instance.close();
+    }
   }
 }
